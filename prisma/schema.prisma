@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Lang {
+  id       Int    @id @default(autoincrement())
+  langName String
+  lang     String
+}
+
+model Home {
+  id              Int               @id @default(autoincrement())
+  key             String
+  imgUrl          String?
+  bgImgUrl        String?
+  isDisplay       Int
+  HomeTranslation HomeTranslation[]
+}
+
+model HomeTranslation {
+  id          Int    @id @default(autoincrement())
+  home        Home   @relation(fields: [homdId], references: [id])
+  homdId      Int
+  name        String
+  discription String
+  langId      Int
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  fname    String?
+  lname    String?
+}
+
+model ContractTranslation {
+  id          Int    @id @default(autoincrement())
+  key         String
+  discription String
+  langId      Int
+  isActive    Int
+}
+
+model Category {
+  id           Int                   @id @default(autoincrement())
+  name         String
+  imgUrl       String?
+  translations CategoryTranslation[]
+  products     Product[]
+}
+
+model CategoryTranslation {
+  id             Int      @id @default(autoincrement())
+  categoryId     Int
+  languageId     Int
+  translatedName String
+  category       Category @relation(fields: [categoryId], references: [id])
+}
+
+model Product {
+  id           Int                  @id @default(autoincrement())
+  name         String
+  price        Float
+  categoryId   Int
+  imgUrl       String?
+  discount     Decimal?
+  translations ProductTranslation[]
+  category     Category             @relation(fields: [categoryId], references: [id])
+}
+
+model ProductTranslation {
+  id             Int     @id @default(autoincrement())
+  productId      Int
+  languageId     Int
+  translatedName String
+  description    String
+  product        Product @relation(fields: [productId], references: [id])
+}
