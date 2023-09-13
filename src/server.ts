@@ -5,6 +5,8 @@ import cors from "cors";
 
 import { indexRouter } from "./Index/index.router";
 import { categoryRouter } from "./Category/category.router";
+import { productRouter } from "./Product/product.router";
+import { lazadaRouter } from "./Lazada/lazada.router";
 
 dotenv.config();
 if (!process.env.PORT) {
@@ -22,6 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use("/api/category", categoryRouter);
+app.use("/api/product", productRouter);
+app.use("/api/lazada", lazadaRouter);
 app.use("/", indexRouter);
 
-app.listen(PORT, () => console.log(`Server Run!! ${PORT}`));
+app.listen(PORT, () => console.log(`Server Run!! ${PORT} `));

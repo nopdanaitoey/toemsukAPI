@@ -1,5 +1,5 @@
 import { db } from "../utils/db.server";
-// import { Category, ContractTranslation } from "./category.type";
+
 import { Category, Product } from "@prisma/client";
 
 export const getListCategoryByLangId = async (
